@@ -54,12 +54,14 @@ void Board::initDefault() {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             Cell cell(i, j);
+
             if (i == 1 || i == 6) {
                 Pawn *pawn = new Pawn(TeamColor::White, i, j, vector<Piece *>());
                 pawn->setTeam((i%2) ? TeamColor::White : TeamColor::Black);
                 theBoard[i][j].setPiece(pawn);
                 pieces.push_back(pawn);
             }
+
             if (i == 0 || i == 7) {
                 if (j == 0 || j == 7) {
                     Rook *rook = new Rook(TeamColor::White, i, j, vector<Piece *>());
@@ -94,10 +96,12 @@ void Board::initDefault() {
             }
         }
     }
+
     for ( auto &n : pieces ) {
         n->setUpPieces(pieces);
         n->removePiece(n);
     }
+
 }
 
 void Board::setPiece(int row, int col, Piece *p) {
@@ -109,9 +113,8 @@ void Board::detachPiece(int row, int col) {
 }
 
 void Board::deletePiece(int row, int col) {
-    Piece *teeeemp = theBoard[row][col].getPiece();
+    Piece *tempPiece = theBoard[row][col].getPiece();
     theBoard[row][col].detachPiece();
-    // delete teeeemp;
 }
 
 Piece *Board::getPiece(int row, int col) {
@@ -255,7 +258,6 @@ bool Board::move(vector<int> start, vector<int> end) {
                     if(theBoard[end[0]][end[1]].getPieceType() != PieceType::NONE) {
                         Piece *teeeemp = theBoard[end[0]][end[1]].getPiece();
                         theBoard[end[0]][end[1]].detachPiece();
-                        // delete teeeemp; // shoud never be reached
                     }
 
                     p->move(end[0], end[1]);
@@ -313,8 +315,6 @@ bool Board::move(vector<int> start, vector<int> end) {
     if(p->getPieceType() == PieceType::Rook){
         static_cast<Rook *>(p)->setNoMoveFalse();
     }
-
-    
 
     if(theBoard[end[0]][end[1]].getPieceType() != PieceType::NONE) {
         Piece *teeeemp = theBoard[end[0]][end[1]].getPiece();
@@ -384,6 +384,7 @@ bool Board::moveForComputer(vector<int> start, vector<int> end) {
         theBoard[end[0]][end[1]].detachPiece();
         delete teeeemp;
     }
+
     theBoard[start[0]][start[1]].detachPiece();
     p->move(end[0], end[1]);
     theBoard[end[0]][end[1]].setPiece(p);
@@ -416,13 +417,16 @@ TeamColor Board::getCheckedPlayer() {
 }
 
 bool Board::isCheckmate() {
+
     vector<Piece *> pieces;
+
     if (turn == TeamColor::Black) {
         pieces = getAllBlackPieces();
     } else {
         pieces = getAllWhitePieces();
     }
-     for (auto &piece: pieces) {
+
+    for (auto &piece: pieces) {
         vector<vector<int>> allMoves = piece->getAllMoves();
         for (auto &move : allMoves) {
             vector<int> temp = piece->getPosition();
@@ -438,6 +442,7 @@ bool Board::isCheckmate() {
            
         }    
     }
+
     cout << "Checkmate! " 
     << ((turn == TeamColor::White) ? "Black" : "White")
     << " wins!" << endl;
@@ -445,17 +450,21 @@ bool Board::isCheckmate() {
 }
 
 bool Board::isStalemate() {
+
     vector<Piece *> pieces;
+
     if (turn == TeamColor::Black) {
         pieces = getAllBlackPieces();
     } else {
         pieces = getAllWhitePieces();
     }
+
     for (auto &piece : pieces) {
         if (!(piece->getAllMoves().empty())) {
             return false;
         }
     }
+
     for (auto &piece : pieces) {
         if (piece->getPieceType() == PieceType::King) {
             if (!(piece->isChecked())){
@@ -465,6 +474,7 @@ bool Board::isStalemate() {
            
         }
     }
+
     return false;
 }
 
@@ -478,33 +488,41 @@ void Board::resign() {
 }
 
 vector<Piece *> Board::getAllWhitePieces() {
-    vector<Piece *> temp;
+
+    vector<Piece *> allWhitePieces;
+
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             Piece *p = theBoard[i][j].getPiece();
             if (p && p->getTeam() == TeamColor::White){
-                temp.push_back(p);
+                allWhitePieces.push_back(p);
             }
         }
     }
-    return temp;
+
+    return allWhitePieces;
 }
 
 vector<Piece *> Board::getAllBlackPieces() {
-    vector<Piece *> temp;
+
+    vector<Piece *> allBlackPieces;
+
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             Piece *p = theBoard[i][j].getPiece();
             if (p && p->getTeam() == TeamColor::Black){
-                temp.push_back(p);
+                allBlackPieces.push_back(p);
             }
         }
     }
-    return temp;
+
+    return allBlackPieces;
 }
 
 vector<Piece *> Board::getAllKingPieces() {
+
     vector<Piece *> kingPieces;
+
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             Piece *p = theBoard[i][j].getPiece();
@@ -513,6 +531,7 @@ vector<Piece *> Board::getAllKingPieces() {
             }
         }
     }
+
     return kingPieces;
 }
 

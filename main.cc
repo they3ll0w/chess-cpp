@@ -59,7 +59,6 @@ int main(int argc, char *argv[]) {
     Player *blackPlayer = nullptr;
     Board b(WINDOW_SIZE);
 
-
     // settings of this game
     bool DEFAULTBOARD = false;
     for (int i = 1; i < argc; ++i) {
@@ -153,9 +152,6 @@ int main(int argc, char *argv[]) {
                             break;
                         }
                     }
-                    //auto it = find(allPieces.begin(), allPieces.end(), p);
-                    //if (it != allPieces.end()) allPieces.erase(it);
-                    // delete the piece in the board
                     Piece *teeeemp = b.getPiece(place[1]-'1', place[0]-'a');
                     b.detachPiece(place[1]-'1', place[0]-'a');
                     delete teeeemp;
@@ -167,21 +163,12 @@ int main(int argc, char *argv[]) {
                         continue;
                     }
                     if (color == "white") {
-                        /*if (whitePlayer && !whitePlayer->getTurn()) {
-                            if (whitePlayer) whitePlayer->setTurn(true);
-                            if (blackPlayer) blackPlayer->setTurn(false);
-                            curTurn = TeamColor::White;
-                            b.toggleTurn();
-                        }*/
                         std::cout << "white player plays next" << endl;
                     }
                     else if (color == "black") {
-                        //if (blackPlayer && !blackPlayer->getTurn()) {
-                           // if (blackPlayer) blackPlayer->setTurn(true);
-                            //if (whitePlayer) whitePlayer->setTurn(false);
                             curTurn = TeamColor::Black;
                             b.toggleTurn();
-                        //}
+                        
                         std::cout << "black player plays next" << endl;
                     }
                     else cerr << "bad color given" << endl;

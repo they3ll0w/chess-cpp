@@ -32,11 +32,11 @@ void Cell::setPiece(Piece *piece) {
 }
 
 void Cell::detachPiece() {
-    // remember to handle p in board.cc
+
     for(auto &piece: p->getPieces()){
         piece->removePiece(p);
     }
-    // delete p;
+
     p = nullptr;
     notifyObservers();
 }
@@ -68,7 +68,6 @@ void Cell::notifyObservers() {
 }
 
 // determine if the player can promote a pawn in board.cc (player.cc)
-// 
 void Cell::promote(PieceType pt) {
     Piece *piece = p;
     if (row != 0 && row != 7) {
@@ -78,28 +77,25 @@ void Cell::promote(PieceType pt) {
         Queen *queen = new Queen(p->getTeam(), p->getPosition()[0], p->getPosition()[1], p->getPieces());
         Piece *teeeemp = getPiece();
         detachPiece();
-        // delete teeeemp;
         setPiece(queen);
     }
     else if (pt == PieceType::Knight) {
         Knight *knight = new Knight(p->getTeam(), p->getPosition()[0], p->getPosition()[1], p->getPieces());
         Piece *teeeemp = getPiece();
         detachPiece();
-        // delete teeeemp;
+
         setPiece(knight);
     }
     else if (pt == PieceType::Rook) {
         Rook *rook = new Rook(p->getTeam(), p->getPosition()[0], p->getPosition()[1], p->getPieces());
         Piece *teeeemp = getPiece();
         detachPiece();
-        // delete teeeemp;
         setPiece(rook);
     }
     else if (pt == PieceType::Bishop) {
         Bishop *bishop = new Bishop(p->getTeam(), p->getPosition()[0], p->getPosition()[1], p->getPieces());
         Piece *teeeemp = getPiece();
         detachPiece();
-        // delete teeeemp;
         setPiece(bishop);
     }
 }
