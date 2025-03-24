@@ -22,7 +22,6 @@ using namespace std;
 
 const int WINDOW_SIZE = 500;
 
-
 Piece *getNewPiece(char piece) {
     Piece *p = nullptr;
     vector<Piece *> emptyPieceVector;

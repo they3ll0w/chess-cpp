@@ -5,10 +5,12 @@
 #include "board.h"
 
 class Player {
+
   protected:
     TeamColor team;
     Board *b;
     bool t;
+
   public:
     Player(TeamColor tc, Board *b, bool t);
     virtual ~Player();
